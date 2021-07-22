@@ -31,6 +31,20 @@ type SSHKey struct {
 	PublicKey   string   `json:"publicKey"`
 }
 
+// NewOVHClient creates an OVHcloud Client with the parameters
+func NewOVHClient(endpoint, appKey, appSecret, consumerKey, region, serviceName string) (*OVHcloud, error) {
+	client, err := ovh.NewClient(endpoint, appKey, appSecret, consumerKey)
+	if err != nil {
+		return nil, err
+	}
+
+	return &OVHcloud{
+		Client:      client,
+		ServiceName: serviceName,
+		Region:      region,
+	}, nil
+}
+
 // CreateSSHKey creates an SSHKey with the given SSHKeyCreateOptions
 func (o *OVHcloud) CreateSSHKey(ctx context.Context, createOpts SSHKeyCreateOptions) (*SSHKey, error) {
 	resp := SSHKey{}
