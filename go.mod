@@ -1,6 +1,6 @@
 module github.com/dirien/ovh-go-sdk
 
-go 1.16
+go 1.19
 
 require (
 	github.com/ovh/go-ovh v1.3.0
