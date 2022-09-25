@@ -19,7 +19,7 @@ type OVHcloud struct {
 // SSHKeyCreateOptions defines the configurable options to create a SSHKey
 type SSHKeyCreateOptions struct {
 	Name      string `json:"name"`
-	PublicKey string `json:"publicKey"`
+	PublicKey string `json:"publicKey"` //nolint:tagliatelle
 }
 
 // SSHKey describes a OVH ssh key object
@@ -27,8 +27,8 @@ type SSHKey struct {
 	ID          string   `json:"id"`
 	Name        string   `json:"name"`
 	Regions     []string `json:"regions"`
-	FingerPrint string   `json:"fingerPrint"`
-	PublicKey   string   `json:"publicKey"`
+	FingerPrint string   `json:"fingerPrint"` //nolint:tagliatelle
+	PublicKey   string   `json:"publicKey"`   //nolint:tagliatelle
 }
 
 // NewOVHClient creates an OVHcloud Client with the parameters
@@ -97,15 +97,15 @@ const (
 // Volume describes a OVH volume object
 type Volume struct {
 	ID           string       `json:"id"`
-	AttachedTo   []string     `json:"attachedTo"`
-	CreationDate time.Time    `json:"creationDate"`
+	AttachedTo   []string     `json:"attachedTo"`   //nolint:tagliatelle
+	CreationDate time.Time    `json:"creationDate"` //nolint:tagliatelle
 	Name         string       `json:"name"`
 	Description  string       `json:"description"`
 	Size         int          `json:"size"`
 	Status       VolumeStatus `json:"status"`
-	Region       string       `json:"Region"`
+	Region       string       `json:"Region"` //nolint:tagliatelle
 	Bootable     bool         `json:"bootable"`
-	PlanCode     string       `json:"planCode"`
+	PlanCode     string       `json:"planCode"` //nolint:tagliatelle
 	Type         VolumeType   `json:"type"`
 }
 
@@ -114,13 +114,13 @@ type VolumeCreateOptions struct {
 	Name        string     `json:"name"`
 	Description string     `json:"description"`
 	Size        int        `json:"size"`
-	Region      string     `json:"Region"`
+	Region      string     `json:"Region"` //nolint:tagliatelle
 	Type        VolumeType `json:"type"`
 }
 
 // VolumeAttachOptions defines the configurable options to attach a Volume to an Instance
 type VolumeAttachOptions struct {
-	InstanceID string `json:"instanceId"`
+	InstanceID string `json:"instanceId"` //nolint:tagliatelle
 }
 
 // VolumeDetachOptions defines the configurable options to detach a Volume from an Instance
@@ -191,18 +191,18 @@ func (o *OVHcloud) DetachVolume(ctx context.Context, id string, options *VolumeD
 type Image struct {
 	ID           string    `json:"id"`
 	Name         string    `json:"name"`
-	Region       string    `json:"Region"`
+	Region       string    `json:"Region"` //nolint:tagliatelle
 	Visibility   string    `json:"visibility"`
 	Type         string    `json:"type"`
-	MinDisk      int       `json:"minDisk"`
-	MinRAM       int       `json:"minRam"`
+	MinDisk      int       `json:"minDisk"` //nolint:tagliatelle
+	MinRAM       int       `json:"minRam"`  //nolint:tagliatelle
 	Size         float64   `json:"size"`
-	CreationDate time.Time `json:"creationDate"`
+	CreationDate time.Time `json:"creationDate"` //nolint:tagliatelle
 	Status       string    `json:"status"`
 	User         string    `json:"user"`
-	FlavorType   string    `json:"flavorType"`
+	FlavorType   string    `json:"flavorType"` //nolint:tagliatelle
 	Tags         []string  `json:"tags"`
-	PlanCode     string    `json:"planCode"`
+	PlanCode     string    `json:"planCode"` //nolint:tagliatelle
 }
 
 // GetImage returns the available Image in a Region
@@ -225,19 +225,19 @@ func (o *OVHcloud) GetImage(ctx context.Context, name, region string) (*Image, e
 type Flavor struct {
 	ID                string `json:"id"`
 	Name              string `json:"name"`
-	Region            string `json:"Region"`
+	Region            string `json:"Region"` //nolint:tagliatelle
 	RAM               int    `json:"ram"`
 	Disk              int    `json:"disk"`
 	Vcpus             int    `json:"vcpus"`
 	Type              string `json:"type"`
-	OsType            string `json:"osType"`
-	InboundBandwidth  int    `json:"inboundBandwidth"`
-	OutboundBandwidth int    `json:"outboundBandwidth"`
+	OsType            string `json:"osType"`            //nolint:tagliatelle
+	InboundBandwidth  int    `json:"inboundBandwidth"`  //nolint:tagliatelle
+	OutboundBandwidth int    `json:"outboundBandwidth"` //nolint:tagliatelle
 	Available         bool   `json:"available"`
 	PlanCodes         struct {
 		Monthly string `json:"monthly"`
 		Hourly  string `json:"hourly"`
-	} `json:"planCodes"`
+	} `json:"planCodes"` //nolint:tagliatelle
 	Capabilities []struct {
 		Name    string `json:"name"`
 		Enabled bool   `json:"enabled"`
@@ -266,24 +266,24 @@ type IP struct {
 	IP        string `json:"ip"`
 	Type      string `json:"type"`
 	Version   int    `json:"version"`
-	NetworkID string `json:"networkId"`
-	GatewayIP string `json:"gatewayIp"`
+	NetworkID string `json:"networkId"` //nolint:tagliatelle
+	GatewayIP string `json:"gatewayIp"` //nolint:tagliatelle
 }
 
 // Instance describe the properties of an OVH instance
 type Instance struct {
 	ID             string         `json:"id"`
 	Name           string         `json:"name"`
-	IPAddresses    []IP           `json:"ipAddresses"`
-	FlavorID       string         `json:"flavorId"`
-	ImageID        string         `json:"imageId"`
-	SSHKeyID       string         `json:"sshKeyId"`
+	IPAddresses    []IP           `json:"ipAddresses"` //nolint:tagliatelle
+	FlavorID       string         `json:"flavorId"`    //nolint:tagliatelle
+	ImageID        string         `json:"imageId"`     //nolint:tagliatelle
+	SSHKeyID       string         `json:"sshKeyId"`    //nolint:tagliatelle
 	Created        time.Time      `json:"created"`
-	Region         string         `json:"Region"`
-	MonthlyBilling string         `json:"monthlyBilling"`
+	Region         string         `json:"Region"`         //nolint:tagliatelle
+	MonthlyBilling string         `json:"monthlyBilling"` //nolint:tagliatelle
 	Status         InstanceStatus `json:"status"`
-	PlanCode       string         `json:"planCode"`
-	OperationIds   []string       `json:"operationIds"`
+	PlanCode       string         `json:"planCode"`     //nolint:tagliatelle
+	OperationIds   []string       `json:"operationIds"` //nolint:tagliatelle
 }
 
 // InstanceStatus selection of possible instance states
@@ -303,15 +303,15 @@ const (
 	InstanceRebuild  InstanceStatus = "REBUILD"
 )
 
-//InstanceCreateOptions defines the configurable options to create a Instance
+// InstanceCreateOptions defines the configurable options to create a Instance
 type InstanceCreateOptions struct {
-	FlavorID       string `json:"flavorId"`
-	ImageID        string `json:"imageId"`
-	MonthlyBilling bool   `json:"monthlyBilling"`
+	FlavorID       string `json:"flavorId"`       //nolint:tagliatelle
+	ImageID        string `json:"imageId"`        //nolint:tagliatelle
+	MonthlyBilling bool   `json:"monthlyBilling"` //nolint:tagliatelle
 	Name           string `json:"name"`
-	Region         string `json:"Region"`
-	SSHKeyID       string `json:"sshKeyId"`
-	UserData       string `json:"userData"`
+	Region         string `json:"Region"`   //nolint:tagliatelle
+	SSHKeyID       string `json:"sshKeyId"` //nolint:tagliatelle
+	UserData       string `json:"userData"` //nolint:tagliatelle
 }
 
 // CreateInstance creates an Instance with the given InstanceCreateOptions
