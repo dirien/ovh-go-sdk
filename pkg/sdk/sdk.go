@@ -31,6 +31,19 @@ type SSHKey struct {
 	PublicKey   string   `json:"publicKey"`   //nolint:tagliatelle
 }
 
+func NewOVHDefaultClient(region, serviceName string) (*OVHcloud, error) {
+	client, err := ovh.NewDefaultClient()
+	if err != nil {
+		return nil, err
+	}
+
+	return &OVHcloud{
+		Client:      client,
+		ServiceName: serviceName,
+		Region:      region,
+	}, nil
+}
+
 // NewOVHClient creates an OVHcloud Client with the parameters
 func NewOVHClient(endpoint, appKey, appSecret, consumerKey, region, serviceName string) (*OVHcloud, error) {
 	client, err := ovh.NewClient(endpoint, appKey, appSecret, consumerKey)
@@ -80,8 +93,9 @@ func (o *OVHcloud) DeleteSSHKey(ctx context.Context, id string) error {
 type VolumeType string
 
 const (
-	VolumeClassic   VolumeType = "classic"
-	VolumeHighSpeed VolumeType = "high-speed"
+	VolumeClassic       VolumeType = "classic"
+	VolumeHighSpeed     VolumeType = "high-speed"
+	VolumeHighSpeedGen2 VolumeType = "high-speed-gen2"
 )
 
 // VolumeStatus descibes the volume states
@@ -103,7 +117,7 @@ type Volume struct {
 	Description  string       `json:"description"`
 	Size         int          `json:"size"`
 	Status       VolumeStatus `json:"status"`
-	Region       string       `json:"Region"` //nolint:tagliatelle
+	Region       string       `json:"region"`
 	Bootable     bool         `json:"bootable"`
 	PlanCode     string       `json:"planCode"` //nolint:tagliatelle
 	Type         VolumeType   `json:"type"`
@@ -114,7 +128,7 @@ type VolumeCreateOptions struct {
 	Name        string     `json:"name"`
 	Description string     `json:"description"`
 	Size        int        `json:"size"`
-	Region      string     `json:"Region"` //nolint:tagliatelle
+	Region      string     `json:"region"`
 	Type        VolumeType `json:"type"`
 }
 
@@ -191,7 +205,7 @@ func (o *OVHcloud) DetachVolume(ctx context.Context, id string, options *VolumeD
 type Image struct {
 	ID           string    `json:"id"`
 	Name         string    `json:"name"`
-	Region       string    `json:"Region"` //nolint:tagliatelle
+	Region       string    `json:"region"`
 	Visibility   string    `json:"visibility"`
 	Type         string    `json:"type"`
 	MinDisk      int       `json:"minDisk"` //nolint:tagliatelle
@@ -225,7 +239,7 @@ func (o *OVHcloud) GetImage(ctx context.Context, name, region string) (*Image, e
 type Flavor struct {
 	ID                string `json:"id"`
 	Name              string `json:"name"`
-	Region            string `json:"Region"` //nolint:tagliatelle
+	Region            string `json:"region"`
 	RAM               int    `json:"ram"`
 	Disk              int    `json:"disk"`
 	Vcpus             int    `json:"vcpus"`
@@ -279,7 +293,7 @@ type Instance struct {
 	ImageID        string         `json:"imageId"`     //nolint:tagliatelle
 	SSHKeyID       string         `json:"sshKeyId"`    //nolint:tagliatelle
 	Created        time.Time      `json:"created"`
-	Region         string         `json:"Region"`         //nolint:tagliatelle
+	Region         string         `json:"region"`
 	MonthlyBilling string         `json:"monthlyBilling"` //nolint:tagliatelle
 	Status         InstanceStatus `json:"status"`
 	PlanCode       string         `json:"planCode"`     //nolint:tagliatelle
@@ -309,7 +323,7 @@ type InstanceCreateOptions struct {
 	ImageID        string `json:"imageId"`        //nolint:tagliatelle
 	MonthlyBilling bool   `json:"monthlyBilling"` //nolint:tagliatelle
 	Name           string `json:"name"`
-	Region         string `json:"Region"`   //nolint:tagliatelle
+	Region         string `json:"region"`
 	SSHKeyID       string `json:"sshKeyId"` //nolint:tagliatelle
 	UserData       string `json:"userData"` //nolint:tagliatelle
 }
