@@ -3,7 +3,7 @@ module github.com/dirien/ovh-go-sdk
 go 1.19
 
 require (
-	github.com/ovh/go-ovh v1.6.0
+	github.com/ovh/go-ovh v1.7.0
 	github.com/pkg/errors v0.9.1
 )
 
